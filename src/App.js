@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import {Autocomplete, TextField, Box, Grid, Container} from '@mui/material'
 import {returnSelect, graphSelect }from './graphSelect';
 import BasicTable from './table';
-import heatmapData from "./heatmap.json";
+//import heatmapData from "./heatmap.json";
 //import data from './plotlyData.json';
 
 
