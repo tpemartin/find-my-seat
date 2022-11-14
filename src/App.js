@@ -14,7 +14,9 @@ import BasicTable from './table';
 window.Plotly = Plotly
 var graphDiv
 function App() {
-  const url = `${config.appscript}${config.spreadsheetId}.json`
+  const searchParams = new URLSearchParams(window.location.search);
+  // const url = `${config.appscript}${config.spreadsheetId}.json`
+  const url = `${config.appscript}${searchParams.get("id")}.json`
   console.log(url)
   var {data, isLoading, error} = useFetch(
     url
@@ -62,14 +64,15 @@ function App() {
     )
     graphSelect(graphDiv, returnSelectResult)
   }
- 
+ <div style={{justifyContent: 'center'}} />
+
   // onNameSelect = onNameSelect.bind(dd)
   // onNameSelect()
   return (
     <div className="App">
 
-      <Grid container spacing={2} style={{ paddingTop: 10 }}>
-        <Grid item xs={12}>
+      <Grid container spacing={2} style={{ paddingTop: 10, justifyContent: 'center' }}>
+        <Grid item xs={12} xl={6}>
           <BasicTable row={seat.row} column={seat.column}>
             <NameMenu dd={dd} width={200} handler={onNameSelect} />
           </BasicTable>
