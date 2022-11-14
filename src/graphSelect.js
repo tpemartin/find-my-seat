@@ -1,16 +1,23 @@
 import Plotly from 'plotly.js-dist'
 
-export default async function graphSelect(graphDiv, data, event){
-  var seatHolder = document.getElementById("seat")
+export function returnSelect(event, assignedSeat){
+  var student = assignedSeat[event.target.innerText]
+  console.log(student)
   
+  return {row: student.y, column: student.x, name: event.target.innerText, student: student}
+}
+function showSeatInSeatHolder(row, column){
+  var seatHolder = document.getElementById("seat")
+  seatHolder.innerText = `Row: ${row}  Column: ${column}`
+}
+export async function graphSelect(graphDiv, returnSelectResult){
+ 
     console.log( graphDiv.data)
+    var {row, column, name, student}=returnSelectResult
     
-    var student = data.assignedSeat[event.target.innerText]
-    console.log(student)
-    seatHolder.innerText = student?`Row: ${student.y}  Column: ${student.x}`:""
     var studentPlotData = student?{
       type: 'scatter', mode: 'markers',
-      x: [student.x], y: [student.y], marker: {size: 30}
+      x: [column], y: [row], marker: {size: 17}
     }:null
     console.log(studentPlotData)
     // Plotly.addTraces(graphDiv, studentPlotData)
