@@ -4,9 +4,10 @@ import Plotly from 'plotly.js-dist'
 import {useFetch} from 'usehooks-ts'
 import config from './config.json'
 import { useEffect, useState } from 'react';
-import {Autocomplete, TextField, Box, Grid, Container} from '@mui/material'
+import {Autocomplete, TextField, Box, Grid, Container, Button} from '@mui/material'
 import {returnSelect, graphSelect }from './graphSelect';
 import BasicTable from './table';
+import { QrCamera } from './camera';
 //import heatmapData from "./heatmap.json";
 //import data from './plotlyData.json';
 
@@ -15,8 +16,33 @@ window.Plotly = Plotly
 var graphDiv
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
-  // const url = `${config.appscript}${config.spreadsheetId}.json`
-  const url = `${config.appscript}${searchParams.get("id")}.json`
+  var id = searchParams.get("id")
+  var [spreadsheetId, setSpreadsheetId] = useState(id)
+  var appContent
+  if(spreadsheetId){
+    appContent = <SeatingChart id={spreadsheetId}/>
+  } else {
+    appContent = <div id="input-holder">
+      <TextField id="outlined-basic" label="Seating chart Google sheets url" variant="outlined" /> 
+      <Button variant="outlined" onClick={()=>{
+        const urlEl = document.getElementById("outlined-basic")
+        id = urlEl.value.match(/(?<=(\/d\/))[^\/]+/g)
+        setSpreadsheetId(id)
+      }}>Submit</Button>
+      </div>
+  }
+  
+  // onNameSelect = onNameSelect.bind(dd)
+  // onNameSelect()
+  return (
+    <div className="App">
+     {appContent}   
+    </div>
+  );
+}
+function SeatingChart({id}){
+  
+  const url = `${config.github}${id}.json`
   console.log(url)
   var {data, isLoading, error} = useFetch(
     url
@@ -48,8 +74,7 @@ function App() {
       // z[13]=2
       
       // Plotly.restyle(graphDiv, {z: z}, 0)
-    }
-  })
+    }})
   
   function onNameSelect(event){//(event: any, newValue: string | null){
     console.log(this)
@@ -64,34 +89,26 @@ function App() {
     )
     graphSelect(graphDiv, returnSelectResult)
   }
- <div style={{justifyContent: 'center'}} />
-
-  // onNameSelect = onNameSelect.bind(dd)
-  // onNameSelect()
-  return (
-    <div className="App">
-
-      <Grid container spacing={2} style={{ paddingTop: 10, justifyContent: 'center' }}>
-        <Grid item xs={12} xl={6}>
-          <BasicTable row={seat.row} column={seat.column}>
-            <NameMenu dd={dd} width={200} handler={onNameSelect} />
-          </BasicTable>
-        </Grid>
+  return <div>
+    <Grid container spacing={2} style={{ paddingTop: 10, justifyContent: 'center' }}>
+      <Grid item xs={12} xl={6}>
+        <BasicTable row={seat.row} column={seat.column}>
+          <NameMenu dd={dd} width={200} handler={onNameSelect} />
+        </BasicTable>
       </Grid>
-      <Grid container spacing={2}  style={{paddingTop: 10}}>
-        <Grid item xs={4}>
-        </Grid>
-        <Grid item xs={4}>
-          <div className="podium">Podium 講台</div>
-        </Grid>
-        <Grid item xs={4}>
-        </Grid>
+    </Grid>
+    <Grid container spacing={2} style={{ paddingTop: 10 }}>
+      <Grid item xs={4}>
       </Grid>
+      <Grid item xs={4}>
+        <div className="podium">Podium 講台</div>
+      </Grid>
+      <Grid item xs={4}>
+      </Grid>
+    </Grid>
 
-      <div id="seatingMap"></div>
-
-    </div>
-  );
+    <div id="seatingMap"></div>
+  </div>
 }
 // function onNameSelect(event){//(event: any, newValue: string | null){
 //   console.log(this)

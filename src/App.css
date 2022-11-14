@@ -27,6 +27,14 @@
 .App-link {
   color: #61dafb;
 }
+#input-holder {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
 .infolayer {
   display: none;
 }
