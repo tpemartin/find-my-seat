@@ -8,6 +8,8 @@ import {Autocomplete, TextField, Box, Grid, Container, Button} from '@mui/materi
 import {returnSelect, graphSelect }from './graphSelect';
 import BasicTable from './table';
 import { QrCamera } from './camera';
+import UrlInput from './textInput';
+import axios from 'axios';
 //import heatmapData from "./heatmap.json";
 //import data from './plotlyData.json';
 
@@ -17,19 +19,23 @@ var graphDiv
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
   var id = searchParams.get("id")
-  var [spreadsheetId, setSpreadsheetId] = useState(id)
+  // var [spreadsheetId, setSpreadsheetId] = useState(id)
   var appContent
-  if(spreadsheetId){
-    appContent = <SeatingChart id={spreadsheetId}/>
+
+
+  // appContent switch
+  if(id){
+    appContent = <SeatingChart id={id}/>
   } else {
-    appContent = <div id="input-holder">
-      <TextField id="outlined-basic" label="Seating chart Google sheets url" variant="outlined" /> 
-      <Button variant="outlined" onClick={()=>{
-        const urlEl = document.getElementById("outlined-basic")
-        id = urlEl.value.match(/(?<=(\/d\/))[^\/]+/g)
-        setSpreadsheetId(id)
-      }}>Submit</Button>
-      </div>
+    function handleSubmit(){
+      const urlEl = document.getElementById("outlined-basic")
+      id = urlEl.value.match(/(?<=(\/d\/))[^\/]+/g)
+      submitToAppScript(id).then(res=> console.log(res.status))
+      //submitToAppScript(id)
+      const submitEl = document.getElementById("submitStatus")
+      submitEl.innerText = 'Processing...'
+    }
+    appContent = <UrlInput onClick={handleSubmit}/>
   }
   
   // onNameSelect = onNameSelect.bind(dd)
@@ -142,5 +148,8 @@ export function BoxComponent({children}) {
     </Box>
   );
 }
-
+async function submitToAppScript(id){
+  const url = config.appscript+'?id='+id
+  return await axios.get(url)
+}
 export default App;
