@@ -4,47 +4,72 @@ import Plotly from 'plotly.js-dist'
 import {useFetch} from 'usehooks-ts'
 import config from './config.json'
 import { useEffect, useState } from 'react';
-import {Autocomplete, TextField, Box, Grid, Container, Button} from '@mui/material'
+import {Autocomplete, TextField, Box, Grid} from '@mui/material'
 import {returnSelect, graphSelect }from './graphSelect';
 import BasicTable from './table';
-import { QrCamera } from './camera';
-import UrlInput from './textInput';
+import UrlInput, {Form} from './textInput';
 import axios from 'axios';
+import * as React from 'react';
+
 //import heatmapData from "./heatmap.json";
 //import data from './plotlyData.json';
 
+function App2(){
+  return <Form></Form>
+}
 
 window.Plotly = Plotly
 var graphDiv
 function App() {
   const searchParams = new URLSearchParams(window.location.search);
-  var id = searchParams.get("id")
-  // var [spreadsheetId, setSpreadsheetId] = useState(id)
-  var appContent
-
-
+  const sha = searchParams.get("sha")
+  const url = searchParams.get("url")
+  var [id, setId]= useState(searchParams.get("id")) 
+  console.log(id)
+  console.log(id?1:0)
+  var email = searchParams.get("email")
+  var [chartLink, setChartLink] = useState(getChartLink(id))
+  
+  var appContent, urlEl, emailEl
   // appContent switch
   if(id){
     appContent = <SeatingChart id={id}/>
   } else {
     function handleSubmit(){
-      const urlEl = document.getElementById("outlined-basic")
-      id = urlEl.value.match(/(?<=(\/d\/))[^\/]+/g)
-      submitToAppScript(id).then(res=> console.log(res.status))
+      urlEl = document.getElementById("url")
+      emailEl = document.getElementById("email")
+      //var idnew = getSheetIdFromUrl(urlEl.value) //.match(/\/d\/[^\/]+/g)[0].replace("/d/", "")
+      const idnew = url?getSheetIdFromUrl(url):getSheetIdFromUrl(urlEl.value)
+      console.log(idnew)
+      console.log(emailEl.value)
+      email = emailEl.value
+      submitToAppScript(idnew, sha, email).then(res=> console.log(res.status))
+      setChartLink(getChartLink(idnew))
       //submitToAppScript(id)
       const submitEl = document.getElementById("submitStatus")
-      submitEl.innerText = 'Processing...'
+      
+      // // submitEl.innerText = 'Processing...'
     }
-    appContent = <UrlInput onClick={handleSubmit}/>
+    appContent = <UrlInput onClick={handleSubmit} chartLink={chartLink}/>
   }
   
-  // onNameSelect = onNameSelect.bind(dd)
-  // onNameSelect()
+  useEffect(()=>{
+    if(url){
+      document.getElementById("url").value= url
+    }
+    if(email){
+      document.getElementById("email").value=email
+    }
+  })
+  
   return (
     <div className="App">
      {appContent}   
     </div>
   );
+}
+function getChartLink(id){
+  return id?`https://tpemartin.github.io/find-my-seat/?id=${id}`:""
 }
 function SeatingChart({id}){
   
@@ -148,8 +173,27 @@ export function BoxComponent({children}) {
     </Box>
   );
 }
-async function submitToAppScript(id){
-  const url = config.appscript+'?id='+id
+async function submitToAppScript(id, sha, email){
+  var url = config.appscript+`?id=${encodeURIComponent(id)}&sha=${encodeURIComponent(sha)}&email=${encodeURIComponent(email)}`
+  console.log(sha)
+  console.log(typeof sha !== 'undefined'?1:0) 
+  console.log(!sha?1:0)
+  const shaQuery = typeof sha !== 'undefined' && !sha?('&sha='+sha):""
+  console.log(shaQuery)
+  
+  // console.log(!sha?1:0)
+  // console.log(sha===""?1:0)
+  // sha = (!sha || sha==="")?null:sha
+  // console.log(sha)
+  email = (email==="")?null:email
+
+ 
+  console.log(shaQuery)
+  // var url = config.appscript+'?id='+id+'&email='+email+(shaQuery?shaQuery:"")
+  console.log(url)
   return await axios.get(url)
+}
+function getSheetIdFromUrl(url){
+  return url.match(/\/d\/[^\/]+/g)[0].replace("/d/", "")
 }
 export default App;

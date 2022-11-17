@@ -1,0 +1,78 @@
+<mjml>
+<!--sheetUrl, -->
+  <mj-head>
+    <mj-title>Find My Seat</mj-title>
+    <mj-font name="Alice" href="https://fonts.googleapis.com/css?family=Alice"></mj-font>
+    <mj-font name="Roboto" href="https://fonts.googleapis.com/css?family=Roboto:400,700"></mj-font>
+    <mj-attributes>
+      <mj-all font-family="Roboto, Helvetica, Arial, sans-serif" padding="0px"></mj-all>
+      <mj-text font-weight="400" font-size="14px" color="#000000" line-height="21px"></mj-text>
+    </mj-attributes>
+  </mj-head>
+  <mj-body background-color="#EAE8E5">
+   
+    <mj-section padding-top="40px" background-color="#FFFFFF">
+      <mj-column width="570px">
+            <mj-image align='left' padding="0 20px" width="50px" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAtNJREFUWEftlztMFFEUhv9/diPRmFgohCU2FhoLK2ywQ3bFhF2WRBARNK6NL6CwsdBEIEYLWxcMsQCi4vIyYR8N7gqdNJJYGAtawkN8FUblsfeYGbJEdgd3Z1hDSLzVzJ1z/vPNuefMvUNs8+A2x8fOABCxB0pCsmV40wzMdmMPl7U2anJBwOJsQubPZQHgU3GqjpKr+GFmYwogg3DML/IVwJP2Aqd7yXhxoZxiPZLpT0wBFjodTQryLD/B11RE8WJJazJD0xRgrlPrARDIJwCAXlezupxTBuY6tQEA9XkGGHQ1q3M5ASw8xnWltHsA9ucJ4jOAu65m1ZUTgG70pRv7llb4BOTZLUGIDP1akSuHbuJbLl2Qqgmjf41u+MQYhKftQAhkzFUoVX9U/wZ9XdOYEIARt7edZIt+J4JgdSLWTkBmgjjioPYBgGYRQjkc6mjRNUzr+lGPrw1Aq34NkUcpfQMgXFEVgGZU/voQkUBNItanT8wG+ZZkqRUAEZkqaZHjus+o23uJZK+Z/hqAx/ccQGNagH5/PNqkz80FOQyy1goAREZcLVKXTd8AGHV7B5lWbCIyVJOIGa1osy3X2+5v+jsDYL4LZZrgoJUlUMRM8Q1MZstwThmwEtjM1uYSYHgpsbthq8F1/wL3zxAJoyBTI1Vjm2YA+tcAmdunTSAHwA0bXzrAC5J5edtcAUUkVJOInV/7Dri9t0Hez9U5L3Yid/yJ2AMD4GVlZZEzues9iAN5Ec8iQmBxRVs+dmZs7OP6uoQrfKXQEAJw+B9DTEOhwf86OqXH2VAY4+Xlzq/OvWVOwUMQJwRQIslGiqbsQAmVRjr6qW9kgjerxK13q98nOyYmVlN6pkeyiMcXEkA/vaxWx6MFBOwBAFrE41sC4CQwUB2PZhS6KUDYU1ULaH0QDvkTkYxznJVshN3eHpB1AAP+eGQk3Xdn/BlZeWOrtv8z8BvcVkgwrMN3KwAAAABJRU5ErkJggg==" />
+        <mj-text align="left" padding="0 20px" color="#1D83A8" font-size="36px" line-height="40px" font-family="Alice, Helvetica, Arial, sans-serif">Find-My-Seat 
+        
+        </mj-text>
+        <mj-text align="left" padding="0 20px"><strong><span style="font-size: 40px;">⚊</span></strong><br /><br /></mj-text>
+      </mj-column>
+    </mj-section>
+<mj-section padding-top="40px" background-color="#ffffff">
+        <mj-column width="500px">
+
+          <mj-text
+                   font-size="20px"
+                   font-family="Helvetica Neue">
+Is processing your sheet: 
+          </mj-text>
+          <mj-text padding-top="30px" color="#525252">
+                <?= sheet.url ?>
+          </mj-text>
+<mj-divider width="20px" padding="20px 0" border-width="2px" border-color="#000000"></mj-divider>
+        <mj-text align="left" padding="0 30px">The seating chart will be ready in normally 5 mins, and can be visited by clicking: 
+          
+          </mj-text>
+          <mj-button background-color="#023af2"
+                     href="https://tpemartin.github.io/find-my-seat/?id=<?= sheet.id ?>">Visit my chart</mj-button>
+          
+          
+    </mj-column>
+  
+  </mj-section>
+      </mj-section>
+<mj-section padding-top="40px" background-color="#ffffff">
+        <mj-column width="500px">
+
+          <mj-text
+                   font-size="20px"
+                   font-family="Helvetica Neue">
+To update your chart from the same sheet url, 
+you can visit: 
+          </mj-text>
+          <mj-text padding-top="30px" color="#525252">
+                https://tpemartin.github.io/find-my-seat/?url=<?= sheet.url ?>&sha=<?= sha?>&email=<?= email?>
+            
+          </mj-text>
+          <mj-text padding-top="20px"
+                   font-size="20px"
+                   font-family="Helvetica Neue">
+or click: 
+          </mj-text>
+          <mj-button padding="30px 0" background-color="#f49c02"
+                     href="https://tpemartin.github.io/find-my-seat/?url=<?= sheet.url ?>&sha=<?= sha?>&email=<?= email?>">Update my chart</mj-button>
+          
+          
+    </mj-column>
+  
+   <mj-section padding="20px 0"  background-color="#fbfbfb">
+      <mj-column>
+        <mj-image width="100px" src="https://emajortaiwan.github.io/home2/android-chrome-192x192.png"></mj-image>
+        <mj-text align='center' width="100px" color="#525252">E.Major Taiwan Design</mj-text>
+      </mj-column>
+
+    </mj-section>
+  </mj-body>
+</mjml>
