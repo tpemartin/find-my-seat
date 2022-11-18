@@ -52,12 +52,24 @@
 #seatingMap {
   margin: auto
 }
+.vertical-center {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+  gap: 10px;
+}
 #mytable {
   display: flex;
   flex-direction: row;
   align-content: center;
   justify-content: center;
   box-shadow: none;
+}
+.input {
+  padding-top: 10px;
 }
 @keyframes App-logo-spin {
   from {
