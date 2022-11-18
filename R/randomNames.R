@@ -1,0 +1,5 @@
+install.packages("randomNames")
+install.packages("clipr")
+library(randomNames)
+library(clipr)
+randomNames(20) |> clipr::write_clip()
