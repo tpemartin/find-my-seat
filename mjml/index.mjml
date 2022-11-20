@@ -26,45 +26,32 @@
           <mj-text
                    font-size="20px"
                    font-family="Helvetica Neue">
-Is processing your sheet: 
+The Google spreadsheet  <a class="mj-content" href="<?=sheet.url?>"  target="_blank">
+                    <?= sheet.name ?>
+                </a>
+                is processed. The seating chart result can be visited buy clicking the following button: 
           </mj-text>
-          <mj-text padding-top="30px" color="#525252">
-                <?= sheet.url ?>
-          </mj-text>
-<mj-divider width="20px" padding="20px 0" border-width="2px" border-color="#000000"></mj-divider>
-        <mj-text align="left" padding="0 30px">The seating chart will be ready in normally 5 mins, and can be visited by clicking: 
-          
-          </mj-text>
+ 
           <mj-button background-color="#023af2"
                      href="https://tpemartin.github.io/find-my-seat/?id=<?= sheet.id ?>">Visit my chart</mj-button>
           
           
-    </mj-column>
-  
-  </mj-section>
-      </mj-section>
-<mj-section padding-top="40px" background-color="#ffffff">
-        <mj-column width="500px">
+    <mj-divider width="20px" padding="20px 0" border-width="2px" border-color="#000000"></mj-divider>
+
 
           <mj-text
                    font-size="20px"
                    font-family="Helvetica Neue">
-To update your chart from the same sheet url, 
-you can visit: 
+To update your chart from the same Google spreahsheets, 
+you can  visit the app's resubmission page by clicking: 
           </mj-text>
-          <mj-text padding-top="30px" color="#525252">
-                https://tpemartin.github.io/find-my-seat/?url=<?= sheet.url ?>&sha=<?= sha?>&email=<?= email?>
-            
-          </mj-text>
-          <mj-text padding-top="20px"
-                   font-size="20px"
-                   font-family="Helvetica Neue">
-or click: 
-          </mj-text>
+
           <mj-button padding="30px 0" background-color="#f49c02"
                      href="https://tpemartin.github.io/find-my-seat/?url=<?= sheet.url ?>&sha=<?= sha?>&email=<?= email?>">Update my chart</mj-button>
           
-          
+   <mj-text
+                   font-size="20px"
+                   font-family="Helvetica Neue">At the page, click Submit again to update.</mj-text>
     </mj-column>
   
    <mj-section padding="20px 0"  background-color="#fbfbfb">
